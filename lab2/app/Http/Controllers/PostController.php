@@ -28,7 +28,13 @@ class PostController extends Controller
 
     public function store()
     {
-        return 'we are in store';
+        $data = request()->all();
+        Post::create([
+            'title' => $data['title'],
+            'description' => $data['description'],
+            'user_id' => $data['post_creator'],
+        ]);
+        return to_route('posts.index');
     }
 
     public function show($postId)
