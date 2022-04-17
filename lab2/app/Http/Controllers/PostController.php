@@ -43,21 +43,26 @@ class PostController extends Controller
     }
     public function edit($postId)
     {
-        $posts=$this->getAllPosts();
-        $index = -1;
-        foreach ($posts as $key => $post){
-            if($post['id']==$postId){
-                $index=$key;
-            }
-        }
-        $post=$posts[$index];
+        $users = User::all();
+        $post=Post::find($postId);
+        $selectedUser=User::find($post['user_id']);
         return view('posts.edit',[
+            'users' => $users,
             'post'=>$post,
+            'selectedUser'=>$selectedUser,
         ]);
+
     }
     public function update($postId)
     {
-        return $this->index();
+        $data = request()->all();
+        Post::where('id', $postId)
+            ->update([
+            'title' => $data['title'],
+            'description' => $data['description'],
+            'user_id' => $data['post_creator'],
+        ]);
+        return to_route('posts.index');
     }
     public function destroy($postId)
     {
