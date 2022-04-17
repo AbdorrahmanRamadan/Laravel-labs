@@ -18,19 +18,18 @@
             </thead>
             <tbody>
             @foreach ( $posts as $post)
-              <tr>
-                <td>{{ $post['id'] }}</th>
-                <td>{{ $post['title'] }}</td>
-                <td>{{ $post['post_creator'] }}</td>
-                <td>{{ $post['created_at'] }}</td>
-                <td>
-                    <x-button type="primary" href="{{ route('posts.show', ['post' => $post['id']]) }}"> View </x-button>
-                    <x-button type="secondary" href="{{ route('posts.edit', ['post' => $post['id']]) }}"> Edit </x-button>
-                    <x-button type="danger" href=""> Delete </x-button>
-                </td>
-              </tr>
-              @endforeach
-
+                <tr>
+                    <td>{{ $post->id }}</th>
+                    <td>{{ $post->title }}</td>
+                    <td>{{$post->user ? $post->user->name : 'Not Found'}}</td>
+                    <td>{{ $post->created_at }}</td>
+                    <td>
+                        <x-button type="primary" href="{{ route('posts.show', ['post' => $post['id']]) }}"> View </x-button>
+                        <x-button type="secondary" href="{{ route('posts.edit', ['post' => $post['id']]) }}"> Edit </x-button>
+                        <x-button type="danger" href=""> Delete </x-button>
+                    </td>
+                </tr>
+            @endforeach
             </tbody>
           </table>
 @endsection
