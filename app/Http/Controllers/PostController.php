@@ -10,10 +10,9 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts=$this->getAllPosts();
-        // dd($posts); for debugging
-        return view('posts.index',[
-            'posts' => $posts,
+        $posts = Post::all();
+        return view("posts.index", [
+            'posts' => $posts
         ]);
     }
 
@@ -25,6 +24,7 @@ class PostController extends Controller
             'users' => $users,
         ]);
     }
+
 
     public function store()
     {
@@ -69,7 +69,8 @@ class PostController extends Controller
     }
     public function destroy($postId)
     {
-        return view('posts.index');
+        Post::find($postId)->delete();
+        return to_route('posts.index');
     }
     private function getAllPosts()
     {

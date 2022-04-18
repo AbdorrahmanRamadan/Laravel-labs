@@ -1,3 +1,6 @@
+<?php
+use Carbon\Carbon;
+?>
 @extends('layouts.app')
 
 @section('title') Show @endsection
@@ -35,7 +38,7 @@
             </div>
             <div>
                 <span class="h6">Created At</span>
-                <span> :- {{$post->created_at}}</span>
+                <span> :- {{Carbon::parse($post->user->created_at)->format('l jS \\of F Y h:i:s A')}}</span>
             </div>
 
         </div>
