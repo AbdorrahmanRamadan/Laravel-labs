@@ -10,7 +10,7 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::paginate(3);
+        $posts = Post::paginate(7);
         return view('posts.index', [
             'posts' => $posts,
         ]);
@@ -24,7 +24,6 @@ class PostController extends Controller
             'users' => $users,
         ]);
     }
-
 
     public function store()
     {
@@ -42,8 +41,10 @@ class PostController extends Controller
         $post=Post::find($postId);
         return view('posts.show',[
             'post'=>$post,
+            'users' => User::all(),
         ]);
     }
+
     public function edit($postId)
     {
         $users = User::all();
@@ -56,6 +57,7 @@ class PostController extends Controller
         ]);
 
     }
+
     public function update($postId)
     {
         $data = request()->all();
@@ -67,14 +69,10 @@ class PostController extends Controller
         ]);
         return to_route('posts.index');
     }
+
     public function destroy($postId)
     {
         Post::find($postId)->delete();
         return to_route('posts.index');
     }
-    private function getAllPosts()
-    {
-        return Post::all();
-    }
-
 }
