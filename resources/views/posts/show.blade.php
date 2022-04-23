@@ -54,7 +54,7 @@
                     <textarea name="body" id="body" cols="15" rows="4" class="form-control" placeholder="Your comment here"></textarea>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Post Creator</label>
+                    <label class="form-label">Commenter</label>
                     <select name="user_id" class="form-control">
                         @foreach ($users as $user)
                             <option value="{{$user->id}}">{{$user->name}}</option>
@@ -71,8 +71,14 @@
         @foreach($post->comments as $comment)
             <div class="card mt-4 mb-4">
                 <div class="card-header">
+                    <form class="delete-form" method="POST" action="{{route('posts.comments.destroy',['comment'=>$comment['id']])}}">
+                        @csrf
+                        @method('delete')
+                        <button class="btn btn-default text-danger float-right" type="submit" onclick="return confirm('you are about to delete this comment \nif you are sure press ok')">X</button>
+                    </form>
                     {{$comment->user->name}}
                 </div>
+
                 <div class="card-body">
                     <div>
                         <span style="font-size: 1.2rem; font-weight: bold">Comment: </span>
