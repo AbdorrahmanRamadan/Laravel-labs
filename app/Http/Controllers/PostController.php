@@ -29,12 +29,7 @@ class PostController extends Controller
 
     public function store(StorePostRequest $request)
     {
-        $data = $request->all();
-        Post::create([
-            'title' => $data['title'],
-            'description' => $data['description'],
-            'user_id' => $data['post_creator'],
-        ]);
+        Post::create($request->only('title', 'description', 'user_id'));
         return to_route('posts.index');
     }
 
