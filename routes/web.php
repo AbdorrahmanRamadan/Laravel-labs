@@ -15,17 +15,24 @@ use App\Http\Controllers\PostController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+Route::middleware(['auth', 'auth.session'])->group(function () {
+    Route::get('/', [PostController::class, 'index'])->name('posts.index');
+    Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+    Route::get('/posts/create/', [PostController::class, 'create'])->name('posts.create');
+    Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
+    Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
+    Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');
+    Route::put('/posts/{post}', [PostController::class, 'update'])->name('posts.update');
+    Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
+    Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name('posts.comments.store');
+    Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name('posts.comments.store');
+    Route::delete('/posts/comments/{comment}', [CommentController::class, 'destroy'])->name('posts.comments.destroy');
 });
-// naming convention from the table at https://laravel.com/docs/9.x/controllers#resource-controllers
-Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
-Route::get('/posts/create/', [PostController::class, 'create'])->name('posts.create');
-Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
-Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
-Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');
-Route::put('/posts/{post}', [PostController::class, 'update'])->name('posts.update');
-Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
-Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name('posts.comments.store');
-Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name('posts.comments.store');
-Route::delete('/posts/comments/{comment}', [CommentController::class, 'destroy'])->name('posts.comments.destroy');
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
