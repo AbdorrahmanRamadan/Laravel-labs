@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 
@@ -31,8 +33,16 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
 });
 Auth::routes();
 
+Route::get('/login/github', [LoginController::class, 'github'])->name('github.auth');
+Route::get('/github/callback', [LoginController::class, 'githubCallback']);
+Route::get('/login/google', [LoginController::class, 'google'])->name('google.auth');
+Route::get('/google/callback', [LoginController::class, 'googleCallback']);
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/', [HomeController::class, 'index']);
+
+
