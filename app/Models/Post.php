@@ -24,6 +24,7 @@ class Post extends Model
         'title',
         'description',
         'user_id',
+        'postPhoto',
     ];
 
     public function user(){
@@ -32,5 +33,13 @@ class Post extends Model
 
     public function comments() {
         return $this->morphMany(Comment::class, 'commentable');
+    }
+
+    protected function setPostPhotoAttribute($value)
+    {
+        if ($value) {
+            $path = $value->store('images/uploads', ['disk' => 'postPhoto']);
+            return   $this->attributes['postPhoto'] = $path;
+        }
     }
 }

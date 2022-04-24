@@ -29,7 +29,9 @@ class PostController extends Controller
 
     public function store(StorePostRequest $request)
     {
-        Post::create($request->only('title', 'description', 'user_id'));
+        $fileInRequest = $request->file('postPhoto');
+        $request->merge(['postPhoto' => $fileInRequest]);
+        Post::create($request->only('title', 'description', 'user_id', 'postPhoto'));
         return to_route('posts.index');
     }
 

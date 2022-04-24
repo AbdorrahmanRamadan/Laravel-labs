@@ -16,15 +16,17 @@ class StorePostRequest extends FormRequest
             'title' => 'required|unique:posts|min:3',
             'description' => 'required|min:3',
             'user_id' => ['required','exists:users,id'],
+            'postPhoto' => 'mimes:jpg,png',
         ];
     }
     public function messages()
     {
         return [
-            'title.required' => 'A title is required',
-            'description.required' => 'A description is required',
-            'user_id.required' => 'pls select a user',
-            'user_id.exists' => 'pls select a user that exists',
+            'title.required' => 'Title is required',
+            'description.required' => 'Description is required',
+            'user_id.required' => 'please select a user',
+            'user_id.exists' => 'please select a valid user',
+            'postPhoto.mimes'=>'please upload jpg or png only',
         ];
     }
 }

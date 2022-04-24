@@ -28,6 +28,10 @@
             Post Creator Info
         </div>
         <div class="card-body">
+            <div class="col-4">
+                <img src="{{ asset($post->postPhoto) }}" class="rounded float-end card-img-top"
+                     alt="...">
+            </div>
             <div>
                 <span class="h6">Name</span>
                 <span> :- {{$post->user->name}}</span>
